@@ -34,6 +34,7 @@
     <div x-data="{
         responsedata: null,
         lecturer: null,
+        name_course: null,
         async createCourse() {
             this.responsedata = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses', 
             {
@@ -52,6 +53,7 @@
         },
     }">       
         <input type="text" x-model="lecturer">
+        <input type="text" x-model="name_course">
        
         <button x-on:click="createCourse">Create course</button>
 
