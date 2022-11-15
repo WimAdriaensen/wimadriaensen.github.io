@@ -76,9 +76,9 @@
 
         <button x-on:click="createCourse">Create course</button>
 
-        <p>Data inserted with id: <strong x-text="responsedata[responsdata.length].id"></strong></p>
-        <p>Name that was inserted: <strong x-text="responsedata[responsdata.length].name_course"></strong></p>
-        <p>Lecturer that was inserted: <strong x-text="responsedata[responsdata.length].lecturer"></strong></p>
+        <p>Data inserted with id: <strong x-text="responsedata[responsdata.length - 1].id"></strong></p>
+        <p>Name that was inserted: <strong x-text="responsedata[responsdata.length - 1].name_course"></strong></p>
+        <p>Lecturer that was inserted: <strong x-text="responsedata[responsdata.length - 1].lecturer"></strong></p>
 
 
       </div>
