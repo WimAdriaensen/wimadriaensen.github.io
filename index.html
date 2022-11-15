@@ -4,8 +4,8 @@
     <script defer src="https://unpkg.com/alpinejs@3.5.0/dist/cdn.min.js"></script>
   </head>
   <body>
-    <h1>My First Heading</h1>
-    <p>My first paragraph.</p>
+    <h1>Welcome to my courses API</h1>
+    
     
     <div x-data="{courses:[]}" x-init="courses = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json()">
         <table>
@@ -27,7 +27,43 @@
             </tbody>
         </table>
         
-        
+    </div>
+    
+    <h2>Creating new course</h2>
+    
+    <div x-data="{
+        responsedata: null,
+        id: null,
+        name: null,
+        lecturer: null
+        async callmethod1() {
+            this.responsedata = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses', 
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    id: this.id,
+                    name_course: this.id,
+                    lecturer: this.lecturer,
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+            })).json();
+
+            console.log(this.responsedata);
+        },
+    }">
+        <input type="int" x-model="id">
+        <input type="text" x-model="name">
+        <input type="text" x-model="lecturer">
+        <button x-on:click="callmethod1">Add course</button>
+
+        <p>Data inserted with id: <strong x-text="responsedata.id"></strong></p>
+        <p>Name that was inserted: <strong x-text="responsedata.name"></strong></p>
+        <p>Lecturer that was inserted: <strong x-text="responsedata.lecturer"></strong></p>
+        <br>
+        <p><strong>Reload page to see the total courses</strong></p>
+
     </div>
 
 
