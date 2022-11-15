@@ -35,7 +35,9 @@
         responsedata: null,
         lecturer: null,
         name_course: null,
+        data: null,
         async createCourse() {
+            data = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json()
             this.responsedata = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses', 
             {
                 method: 'POST',
