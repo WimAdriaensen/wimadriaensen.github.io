@@ -7,12 +7,7 @@
     <h1>My First Heading</h1>
     <p>My first paragraph.</p>
     
-    <div x-data="{
-        responsedata: null,
-        async getData() {
-            this.responsedata = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json();
-        }
-    }">
+    <div x-data="{posts:[]}" x-init="posts = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses'))">
         <button x-on:click="getData">Send get request</button>
         Data returned: <strong x-text="responsedata[0].name_course">Placeholder</strong>
     </div>
