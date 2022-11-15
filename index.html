@@ -8,12 +8,25 @@
     <p>My first paragraph.</p>
     
     <div x-data="{courses:[]}" x-init="courses = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json()">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Course name</th>
+                    <th>Lecturer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template x-for="course in courses">
+                  <tr>
+                      <td x-text="course.id"></td>
+                      <td x-text="course.name_course"></td>
+                      <td x-text="course.lecturer"></td>
+                  </tr>
+                </template>
+            </tbody>
+        </table>
         
-        <template x-for="course in courses">
-           <p x-text="course.id"></p>
-           <p x-text="course.name_course"></p>
-           <p x-text="course.lecturer"></p>
-        </template>
         
     </div>
 
