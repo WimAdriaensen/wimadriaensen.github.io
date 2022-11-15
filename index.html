@@ -53,11 +53,16 @@
 
             console.log(this.responsedata);
         },
-    }">       
-        <input type="text" x-model="lecturer">
-        <input type="text" x-model="name_course">
+    }">  
+        <form>
+            <label for="lecturer">Lecturer:</label>
+            <input type="text" id="lecturer" x-model="lecturer">
+            
+            <label for="course">Lecturer:</label>
+            <input type="text" id="course" x-model="name_course">
        
-        <button x-on:click="createCourse">Create course</button>
+            <button x-on:click="createCourse">Create course</button>
+        </form>
 
         <p>Data inserted with id: <strong x-text="responsedata[responsdata.length].id"></strong></p>
         <p>Name that was inserted: <strong x-text="responsedata[responsdata.length].name_course"></strong></p>
