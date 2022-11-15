@@ -7,14 +7,14 @@
     <h1>My First Heading</h1>
     <p>My first paragraph.</p>
     
-    <div x-data="{courses:[]}" x-init="courses = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json()">
+    <div x-data="{
+        responsedata: null,
+        async getData() {
+            this.responsedata = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json();
+        }
+    }" x-init="getData">
         
-        <template x-for="course in courses">
-           <p x-text="course.id"></p>
-           <p x-text="course.name_course"></p>
-           <p x-text="course.lecturer"></p>
-        </template>
-        
+        Data returned: <strong x-text="responsedata[0].name_course">Placeholder</strong>
     </div>
 
 
