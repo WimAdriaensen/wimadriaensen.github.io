@@ -13,29 +13,38 @@
   <body>
    <div class="container bg-light my-3">
    
-    <h1 class="text-center">Welcome to my courses API</h1>
+    <h1 class="text-center py-3">Welcome to my courses API</h1>
     
-    
-    <div x-data="{courses:[]}" x-init="courses = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json()">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Course name</th>
-                    <th>Lecturer</th>
-                </tr>
-            </thead>
-            <tbody>
-                <template x-for="course in courses">
-                  <tr>
-                      <td x-text="course.id"></td>
-                      <td x-text="course.name_course"></td>
-                      <td x-text="course.lecturer"></td>
-                  </tr>
-                </template>
-            </tbody>
-        </table>
-        
+    <div class="row justify-content-center py-3">
+        <div class="col-auto" x-data="{
+        courses: null,
+        async getData() {
+            this.courses = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json();
+        }
+        }" x-init="getData">
+
+            <table class="table table-responsive">
+                <thead>
+                    <tr class="text-center">
+                        <th>ID</th>
+                        <th>Course name</th>
+                        <th>Lecturer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template x-for="course in courses">
+                      <tr class="text-center">
+                          <td class="px-3" x-text="course.id"></td>
+                          <td class="px-3" x-text="course.name_course"></td>
+                          <td class="px-3" x-text="course.lecturer"></td>
+                      </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div class="text-end">
+                <button x-on:click="getData">Refresh</button>
+            </div>
+        </div>
     </div>
     
     <h2>Creating new course</h2>
@@ -67,8 +76,8 @@
         <table>
            <thead>
                <tr>
-                   <th>Lecturer</th>
-                   <th>Course name</th>
+                   <th>Lecturer:</th>
+                   <th>Course name:</th>
                </tr>
            </thead>
            <tbody>
