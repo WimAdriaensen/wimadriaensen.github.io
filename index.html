@@ -13,93 +13,98 @@
   <body>
    <div class="container bg-light my-3">
    
-    <h1 class="text-center py-3">Welcome to my courses API</h1>
-    
-    <div class="row justify-content-center py-3">
-        <div class="col-auto" x-data="{
-        courses: null,
-        async getData() {
-            this.courses = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json();
-        }
-        }" x-init="getData">
+        <h1 class="text-center mb-3 py-3">Welcome to my courses API</h1>
 
-            <table class="table table-responsive">
-                <thead>
-                    <tr class="text-center">
-                        <th>ID</th>
-                        <th>Course name</th>
-                        <th>Lecturer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <template x-for="course in courses">
-                      <tr class="text-center">
-                          <td class="px-3" x-text="course.id"></td>
-                          <td class="px-3" x-text="course.name_course"></td>
-                          <td class="px-3" x-text="course.lecturer"></td>
-                      </tr>
-                    </template>
-                </tbody>
-            </table>
-            <div class="text-end">
-                <button x-on:click="getData">Refresh</button>
+        <div class="row justify-content-end">
+            <h2 class="mt-3 col-5 text-decoration-underline">Creating a new course</h2>
+        </div>
+
+       <div class="row justify-content-around py-3">
+
+            <div class="col-4" x-data="{
+            courses: null,
+            async getData() {
+                this.courses = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json();
+            }
+            }" x-init="getData">
+
+                <table class="table">
+                    <thead>
+                        <tr class="text-center">
+                            <th>ID</th>
+                            <th>Course name</th>
+                            <th>Lecturer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="course in courses">
+                          <tr class="text-center">
+                              <td class="px-3" x-text="course.id"></td>
+                              <td class="px-3" x-text="course.name_course"></td>
+                              <td class="px-3" x-text="course.lecturer"></td>
+                          </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <div class="text-end mt-2">
+                    <button type="button" class="btn btn-success" x-on:click="getData">Refresh list</button>
+                </div>
             </div>
+
+            <div class="col-4 mt-3">
+
+                <div x-data="{
+                    responsedata: null,
+                    lecturer: null,
+                    name_course: null,
+                    data: null,
+                    async createCourse() {
+                        data = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json()
+                        this.responsedata = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses',
+                        {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                id: (data.length + 1),
+                                name_course: this.name_course,
+                                lecturer: this.lecturer,
+                            }),
+                            headers: {
+                                'Content-type': 'application/json; charset=UTF-8',
+                            },
+                        })).json();
+
+                        console.log(this.responsedata);
+                    },
+                }">
+
+
+                    <div class="mb-3 row">
+                        <label for="inputLecturer" class="col-sm-4 col-form-label">Lecturer:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="inputLecturer" x-model="lecturer">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="inputCourse" class="col-sm-4 col-form-label">Course name:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="inputCourse" x-model="name_course">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary btn-sm my-3" x-on:click="createCourse">Create course</button>
+
+
+                    <p class="mt-3">Data inserted with id: <strong x-text="responsedata.id"></strong></p>
+                    <p>Name that was inserted: <strong x-text="responsedata.name_course"></strong></p>
+                    <p>Lecturer that was inserted: <strong x-text="responsedata.lecturer"></strong></p>
+
+                    <div class="mt-4">
+<!--                        Hier de knop schrijven voor data van /maker op te vangen, eventueel met een bootstrap component?-->
+                    </div>
+
+                </div>
         </div>
     </div>
-    
-    <h2>Creating new course</h2>
-    
-    <div x-data="{
-        responsedata: null,
-        lecturer: null,
-        name_course: null,
-        data: null,
-        async createCourse() {
-            data = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json()
-            this.responsedata = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses', 
-            {
-                method: 'POST',
-                body: JSON.stringify({
-                    id: (data.length + 1),
-                    name_course: this.name_course,
-                    lecturer: this.lecturer,
-                }),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8',
-                },
-            })).json();
-
-            console.log(this.responsedata);
-        },
-    }">  
-       
-        <table>
-           <thead>
-               <tr>
-                   <th>Lecturer:</th>
-                   <th>Course name:</th>
-               </tr>
-           </thead>
-           <tbody>
-               <tr>
-                   <td>
-                       <input type="text" x-model="lecturer">
-                   </td>
-                   <td>
-                       <input type="text" x-model="name_course">
-                   </td>
-               </tr>
-           </tbody>
-        </table>
-
-        <button x-on:click="createCourse">Create course</button>
-
-        <p>Data inserted with id: <strong x-text="responsedata.id"></strong></p>
-        <p>Name that was inserted: <strong x-text="responsedata.name_course"></strong></p>
-        <p>Lecturer that was inserted: <strong x-text="responsedata.lecturer"></strong></p>
-
-
-      </div>
 
 </div>
 </body>
