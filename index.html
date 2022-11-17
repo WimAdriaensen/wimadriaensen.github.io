@@ -30,8 +30,8 @@
                 this.courses = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/courses')).json();
             },
             async getCoursesItclass() {
-                it_class = this.it_class
-                url = 'https://api-wimadriaensen.cloud.okteto.net/courses/' + this.it_class
+                it_class = this.it_class;
+                url = 'https://api-wimadriaensen.cloud.okteto.net/courses/' + this.it_class;
                 this.coursesItclass = await (await fetch(url)).json();
             }
             }" x-init="getData">
@@ -120,6 +120,11 @@
 
                         console.log(this.responsedata);
                     },
+
+                    maker: null,
+                    async showMaker() {
+                        this.maker = await (await fetch('https://api-wimadriaensen.cloud.okteto.net/maker')).json();
+                    },
                 }">
 
                     <h5 class="text-decoration-underline mb-4">Creating a new course</h5>
@@ -150,9 +155,13 @@
                     <p>Lecturer that was inserted: <strong x-text="responsedata.lecturer"></strong></p>
                     <p>Class that was inserted: <strong x-text="responsedata.it_class"></strong></p>
 
-                    <div class="mt-4">
-<!--                        Hier de knop schrijven voor data van /maker op te vangen, eventueel met een bootstrap component?-->
-                    </div>
+
+                    <button class="btn btn-primary btn-sm my-3" x-on:click="showMaker">Get owner information</button>
+                    <p>Maker: <strong x-text="maker.owner"></strong></p>
+                    <p>Github repository: <strong x-text="maker.repository"></strong></p>
+                    <p>Github account: <strong x-text="maker.github"></strong></p>
+
+
 
                 </div>
         </div>
